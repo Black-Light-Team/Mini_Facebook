@@ -27,8 +27,15 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> createUtilisateur(@RequestBody UserDto userDto){
+        System.out.println("dans la methode post");
         UserDto createdUserDto = userService.saveUser(userDto);
-        return new ResponseEntity<>(createdUserDto,HttpStatus.OK);
+        if (createdUserDto != null) {
+            // Les données ont été insérées avec succès, renvoyer HttpStatus.OK
+            return new ResponseEntity<>(createdUserDto, HttpStatus.OK);
+        } else {
+            // Les données n'ont pas pu être insérées, renvoyer HttpStatus.NOT_FOUND
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping
